@@ -15,14 +15,19 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/AboutUs";
 import Products from "./pages/Products";
+import Recipes from "./pages/Recipes";
+import Impact from "./pages/Impact";
 import Contact from "./pages/Contact";
 import Disclaimer from "./pages/Disclaimer";
 
 function App() {
-  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(
+    localStorage.getItem("disclaimerAccepted") === "true"
+  );
 
   const handleAcceptDisclaimer = () => {
     setDisclaimerAccepted(true);
+    localStorage.setItem("disclaimerAccepted", "true");
   };
 
   return (
@@ -30,11 +35,11 @@ function App() {
       <GlobalStyle />
       <Helmet>
         <title>
-          Nigerian Bread Mini Bakery - Authentic Nigerian Bread in the UK
+          Beyno's African Spice Company - Authentic African Spices UK
         </title>
         <meta
           name="description"
-          content="Taste the authentic flavors of home with our traditional Nigerian bread, baked fresh daily in the UK and delivered to your doorstep"
+          content="Discover authentic African spices ethically sourced from African farmers. Premium quality berbere, suya, ras el hanout and more."
         />
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -43,7 +48,6 @@ function App() {
       </Helmet>
 
       <Router>
-        {/* Show disclaimer until it's accepted */}
         {!disclaimerAccepted ? (
           <Disclaimer onAccept={handleAcceptDisclaimer} />
         ) : (
@@ -53,6 +57,8 @@ function App() {
               <Routes>
                 <Route path="/about" element={<About />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/recipes" element={<Recipes />} />
+                <Route path="/impact" element={<Impact />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route
                   path="/disclaimer"

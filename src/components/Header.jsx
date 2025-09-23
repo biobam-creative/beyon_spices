@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Button from "./Button";
 
 const HeaderContainer = styled.header`
   background-color: ${(props) => props.theme.primary};
@@ -76,7 +75,8 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogoClick = () => {
+  const handleLogoClick = (e) => {
+    e.preventDefault();
     navigate("/");
     setMobileMenuOpen(false);
   };
@@ -86,8 +86,8 @@ const Header = () => {
       <Container>
         <Nav>
           <Logo>
-            <a href="#" onClick={handleLogoClick}>
-              Nigerian <span>Bread</span>
+            <a href="/" onClick={handleLogoClick}>
+              Beyno's <span>Spices</span>
             </a>
           </Logo>
           <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -107,6 +107,16 @@ const Header = () => {
             <NavItem>
               <Link to="/products" onClick={() => setMobileMenuOpen(false)}>
                 Products
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/recipes" onClick={() => setMobileMenuOpen(false)}>
+                Recipes
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/impact" onClick={() => setMobileMenuOpen(false)}>
+                Our Impact
               </Link>
             </NavItem>
             <NavItem>

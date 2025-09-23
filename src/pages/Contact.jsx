@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../components/Button";
-import { Card, CardContent } from "../components/Card";
+import { Card, CardContent, CardTitle } from "../components/SpiceCard";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -20,33 +20,144 @@ const SectionTitle = styled.h2`
   color: ${(props) => props.theme.primary};
 `;
 
+const ContactGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const FormGroup = styled.div`
+  margin-bottom: 1.5rem;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: ${(props) => props.theme.secondary};
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid ${(props) => props.theme.secondary}20;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: ${(props) => props.theme.primary};
+  }
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid ${(props) => props.theme.secondary}20;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: ${(props) => props.theme.primary};
+  }
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid ${(props) => props.theme.secondary}20;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-height: 120px;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: ${(props) => props.theme.primary};
+  }
+`;
+
+const CheckboxGroup = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+`;
+
+const Checkbox = styled.input`
+  margin-right: 0.5rem;
+`;
+
+const ContactInfo = styled.div`
+  h3 {
+    color: ${(props) => props.theme.primary};
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+`;
+
+const BusinessHours = styled.div`
+  background: ${(props) => props.theme.light};
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid ${(props) => props.theme.primary};
+  margin: 1.5rem 0;
+`;
+
+const NewsletterSignup = styled.div`
+  background: linear-gradient(
+    135deg,
+    ${(props) => props.theme.primary}15,
+    ${(props) => props.theme.accent}15
+  );
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 2rem;
+`;
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    orderType: "",
-    breadSelection: [],
-    deliveryLocation: "",
-    preferredDay: "",
-    specialRequirements: "",
+    inquiryType: "",
+    spiceInterest: [],
+    message: "",
     hearAboutUs: "",
+    newsletter: false,
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     if (type === "checkbox") {
-      const breadSelection = [...formData.breadSelection];
-      if (checked) {
-        breadSelection.push(value);
+      if (name === "newsletter") {
+        setFormData({ ...formData, [name]: checked });
       } else {
-        const index = breadSelection.indexOf(value);
-        if (index > -1) {
-          breadSelection.splice(index, 1);
+        const spiceInterest = [...formData.spiceInterest];
+        if (checked) {
+          spiceInterest.push(value);
+        } else {
+          const index = spiceInterest.indexOf(value);
+          if (index > -1) {
+            spiceInterest.splice(index, 1);
+          }
         }
+        setFormData({ ...formData, spiceInterest });
       }
-      setFormData({ ...formData, breadSelection });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -54,350 +165,351 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Thank you for your order! We will contact you soon.");
-    // In a real application, you would send this data to a server
+    alert("Thank you for your message! We will get back to you soon.");
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      inquiryType: "",
+      spiceInterest: [],
+      message: "",
+      hearAboutUs: "",
+      newsletter: false,
+    });
   };
 
   return (
     <Container>
       <Section>
-        <SectionTitle>Contact Us</SectionTitle>
+        <SectionTitle>Connect with Beyno's African Spice Company</SectionTitle>
+
         <Card>
           <CardContent>
-            <h3>Ready to Taste Authentic Nigerian Bread?</h3>
+            <CardTitle>Ready to Transform Your Cooking?</CardTitle>
             <p>
-              Contact us to place orders, ask questions, or learn more about our
-              traditional baking methods.
+              Contact us to learn more about our ethically sourced African
+              spices and how we're supporting farming communities across Africa.
             </p>
 
-            <form onSubmit={handleSubmit} style={{ marginTop: "2rem" }}>
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="name"
-                  style={{ display: "block", marginBottom: "0.5rem" }}
-                >
-                  Name:
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
-                />
+            <ContactGrid>
+              <div>
+                <form onSubmit={handleSubmit}>
+                  <FormGroup>
+                    <Label htmlFor="name">Name:</Label>
+                    <Input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label htmlFor="email">Email:</Label>
+                    <Input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label htmlFor="phone">Phone Number:</Label>
+                    <Input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label htmlFor="inquiryType">Inquiry Type:</Label>
+                    <Select
+                      id="inquiryType"
+                      name="inquiryType"
+                      value={formData.inquiryType}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Select an option</option>
+                      <option value="general">General Inquiry</option>
+                      <option value="wholesale">Wholesale/Restaurant</option>
+                      <option value="custom">Custom Blends</option>
+                      <option value="classes">Cooking Classes</option>
+                      <option value="press">Press/Media</option>
+                    </Select>
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label>Spice Interest:</Label>
+                    <CheckboxGroup>
+                      <Checkbox
+                        type="checkbox"
+                        id="ethiopian"
+                        name="spiceInterest"
+                        value="ethiopian"
+                        onChange={handleChange}
+                      />
+                      <Label
+                        htmlFor="ethiopian"
+                        style={{ display: "inline", fontWeight: "normal" }}
+                      >
+                        Ethiopian Blends
+                      </Label>
+                    </CheckboxGroup>
+                    <CheckboxGroup>
+                      <Checkbox
+                        type="checkbox"
+                        id="westAfrican"
+                        name="spiceInterest"
+                        value="westAfrican"
+                        onChange={handleChange}
+                      />
+                      <Label
+                        htmlFor="westAfrican"
+                        style={{ display: "inline", fontWeight: "normal" }}
+                      >
+                        West African
+                      </Label>
+                    </CheckboxGroup>
+                    <CheckboxGroup>
+                      <Checkbox
+                        type="checkbox"
+                        id="northAfrican"
+                        name="spiceInterest"
+                        value="northAfrican"
+                        onChange={handleChange}
+                      />
+                      <Label
+                        htmlFor="northAfrican"
+                        style={{ display: "inline", fontWeight: "normal" }}
+                      >
+                        North African
+                      </Label>
+                    </CheckboxGroup>
+                    <CheckboxGroup>
+                      <Checkbox
+                        type="checkbox"
+                        id="eastAfrican"
+                        name="spiceInterest"
+                        value="eastAfrican"
+                        onChange={handleChange}
+                      />
+                      <Label
+                        htmlFor="eastAfrican"
+                        style={{ display: "inline", fontWeight: "normal" }}
+                      >
+                        East African
+                      </Label>
+                    </CheckboxGroup>
+                    <CheckboxGroup>
+                      <Checkbox
+                        type="checkbox"
+                        id="individual"
+                        name="spiceInterest"
+                        value="individual"
+                        onChange={handleChange}
+                      />
+                      <Label
+                        htmlFor="individual"
+                        style={{ display: "inline", fontWeight: "normal" }}
+                      >
+                        Individual Spices
+                      </Label>
+                    </CheckboxGroup>
+                    <CheckboxGroup>
+                      <Checkbox
+                        type="checkbox"
+                        id="custom"
+                        name="spiceInterest"
+                        value="custom"
+                        onChange={handleChange}
+                      />
+                      <Label
+                        htmlFor="custom"
+                        style={{ display: "inline", fontWeight: "normal" }}
+                      >
+                        Custom Blends
+                      </Label>
+                    </CheckboxGroup>
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label htmlFor="message">Message:</Label>
+                    <TextArea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <Label htmlFor="hearAboutUs">
+                      How did you hear about us?
+                    </Label>
+                    <Select
+                      id="hearAboutUs"
+                      name="hearAboutUs"
+                      value={formData.hearAboutUs}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select an option</option>
+                      <option value="social">Social Media</option>
+                      <option value="friend">Friend Referral</option>
+                      <option value="blog">Food Blog</option>
+                      <option value="restaurant">Restaurant</option>
+                      <option value="search">Online Search</option>
+                      <option value="other">Other</option>
+                    </Select>
+                  </FormGroup>
+
+                  <CheckboxGroup>
+                    <Checkbox
+                      type="checkbox"
+                      id="newsletter"
+                      name="newsletter"
+                      checked={formData.newsletter}
+                      onChange={handleChange}
+                    />
+                    <Label
+                      htmlFor="newsletter"
+                      style={{ display: "inline", fontWeight: "normal" }}
+                    >
+                      Subscribe to newsletter? Yes, send me spice tips and
+                      recipes
+                    </Label>
+                  </CheckboxGroup>
+
+                  <Button type="submit" primary style={{ marginTop: "1rem" }}>
+                    Send Message
+                  </Button>
+                </form>
               </div>
 
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="email"
-                  style={{ display: "block", marginBottom: "0.5rem" }}
-                >
-                  Email:
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
-                />
-              </div>
+              <ContactInfo>
+                <h3>Company Contact Information</h3>
 
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="phone"
-                  style={{ display: "block", marginBottom: "0.5rem" }}
-                >
-                  Phone Number:
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
-                />
-              </div>
+                <p>
+                  <strong>Head Office & Warehouse</strong>
+                  <br />
+                  Beyno's African Spice Company
+                  <br />
+                  Unit 22, Spice Trading Estate
+                  <br />
+                  London, E1 XXX
+                  <br />
+                  United Kingdom
+                </p>
 
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="orderType"
-                  style={{ display: "block", marginBottom: "0.5rem" }}
-                >
-                  Order Type:
-                </label>
-                <select
-                  id="orderType"
-                  name="orderType"
-                  value={formData.orderType}
-                  onChange={handleChange}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
-                >
-                  <option value="">Select an option</option>
-                  <option value="regular">Regular Order</option>
-                  <option value="bulk">Bulk Order</option>
-                  <option value="subscription">Subscription</option>
-                  <option value="wholesale">Wholesale Inquiry</option>
-                </select>
-              </div>
+                <p>
+                  <strong>Customer Service:</strong>
+                  <br />
+                  Phone: +44 (0) 20-XXXX-XXXX
+                  <br />
+                  WhatsApp: +44 (0) 7XXX-XXX-XXX
+                  <br />
+                  Email: hello@beynosafricanspices.co.uk
+                  <br />
+                  Orders: orders@beynosafricanspices.co.uk
+                </p>
 
-              <div style={{ marginBottom: "1rem" }}>
-                <label style={{ display: "block", marginBottom: "0.5rem" }}>
-                  Bread Selection:
-                </label>
+                <BusinessHours>
+                  <h4>Business Hours:</h4>
+                  <p>
+                    Monday - Friday: 9:00 AM - 6:00 PM
+                    <br />
+                    Saturday: 10:00 AM - 4:00 PM
+                    <br />
+                    Sunday: Closed
+                    <br />
+                    Online orders processed 24/7
+                  </p>
+                </BusinessHours>
+
                 <div>
-                  <input
-                    type="checkbox"
-                    id="classic"
-                    name="breadSelection"
-                    value="classic"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="classic" style={{ marginLeft: "0.5rem" }}>
-                    Classic White
-                  </label>
+                  <h4>Wholesale & Restaurant Inquiries</h4>
+                  <p>
+                    <strong>For Restaurants & Retailers:</strong>
+                    <br />
+                    Wholesale Manager: wholesale@beynosafricanspices.co.uk
+                    <br />
+                    • Bulk Pricing Available
+                    <br />
+                    • Custom Blend Development
+                    <br />
+                    • Regular Supply Contracts
+                    <br />• Marketing Support Materials
+                  </p>
                 </div>
+
                 <div>
-                  <input
-                    type="checkbox"
-                    id="wholeWheat"
-                    name="breadSelection"
-                    value="wholeWheat"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="wholeWheat" style={{ marginLeft: "0.5rem" }}>
-                    Whole Wheat
-                  </label>
+                  <h4>Public Transport:</h4>
+                  <p>
+                    Nearest Underground Station - [Station Name]
+                    <br />
+                    <strong>Delivery:</strong> UK-wide shipping available with
+                    next-day options for London area
+                  </p>
                 </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="sweet"
-                    name="breadSelection"
-                    value="sweet"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="sweet" style={{ marginLeft: "0.5rem" }}>
-                    Sweet/Agege Style
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="coconut"
-                    name="breadSelection"
-                    value="coconut"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="coconut" style={{ marginLeft: "0.5rem" }}>
-                    Coconut
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    id="glutenFree"
-                    name="breadSelection"
-                    value="glutenFree"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="glutenFree" style={{ marginLeft: "0.5rem" }}>
-                    Gluten-Free
-                  </label>
-                </div>
-              </div>
-
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="deliveryLocation"
-                  style={{ display: "block", marginBottom: "0.5rem" }}
-                >
-                  Delivery Location:
-                </label>
-                <input
-                  type="text"
-                  id="deliveryLocation"
-                  name="deliveryLocation"
-                  value={formData.deliveryLocation}
-                  onChange={handleChange}
-                  required
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="preferredDay"
-                  style={{ display: "block", marginBottom: "0.5rem" }}
-                >
-                  Preferred Delivery Day:
-                </label>
-                <select
-                  id="preferredDay"
-                  name="preferredDay"
-                  value={formData.preferredDay}
-                  onChange={handleChange}
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
-                >
-                  <option value="">Select a day</option>
-                  <option value="monday">Monday</option>
-                  <option value="tuesday">Tuesday</option>
-                  <option value="wednesday">Wednesday</option>
-                  <option value="thursday">Thursday</option>
-                  <option value="friday">Friday</option>
-                  <option value="saturday">Saturday</option>
-                </select>
-              </div>
-
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="specialRequirements"
-                  style={{ display: "block", marginBottom: "0.5rem" }}
-                >
-                  Special Requirements:
-                </label>
-                <textarea
-                  id="specialRequirements"
-                  name="specialRequirements"
-                  value={formData.specialRequirements}
-                  onChange={handleChange}
-                  rows="4"
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
-                ></textarea>
-              </div>
-
-              <div style={{ marginBottom: "1rem" }}>
-                <label
-                  htmlFor="hearAboutUs"
-                  style={{ display: "block", marginBottom: "0.5rem" }}
-                >
-                  How did you hear about us?:
-                </label>
-                <select
-                  id="hearAboutUs"
-                  name="hearAboutUs"
-                  value={formData.hearAboutUs}
-                  onChange={handleChange}
-                  style={{
-                    width: "100%",
-                    padding: "0.5rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
-                >
-                  <option value="">Select an option</option>
-                  <option value="socialMedia">Social Media</option>
-                  <option value="friend">Friend Referral</option>
-                  <option value="africanStore">African Store</option>
-                  <option value="onlineSearch">Online Search</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <Button type="submit" primary>
-                Place Order / Send Inquiry
-              </Button>
-            </form>
+              </ContactInfo>
+            </ContactGrid>
           </CardContent>
         </Card>
 
+        <NewsletterSignup>
+          <h3>Join the Beyno's Spice Community</h3>
+          <p>Subscribe to our newsletter for:</p>
+          <ul
+            style={{
+              textAlign: "left",
+              display: "inline-block",
+              margin: "1rem 0",
+            }}
+          >
+            <li>Weekly recipes featuring African spices</li>
+            <li>Seasonal spice guides and cooking tips</li>
+            <li>First access to new products</li>
+            <li>Stories from our farmer partners</li>
+            <li>Exclusive subscriber discounts</li>
+          </ul>
+          <div style={{ marginTop: "1rem" }}>
+            <Input
+              type="email"
+              placeholder="Enter your email address"
+              style={{ width: "300px", marginRight: "1rem" }}
+            />
+            <Button primary>Subscribe</Button>
+          </div>
+        </NewsletterSignup>
+
         <Card style={{ marginTop: "2rem" }}>
           <CardContent>
-            <h3>Company Contact Information</h3>
-            <p>
-              <strong>Production Facility & Head Office:</strong>
-              <br />
-              Nigerian Bread Mini Bakery
-              <br />
-              Unit 15, Industrial Estate
-              <br />
-              Leicester, LE4 6XY
-              <br />
-              United Kingdom
-            </p>
-
-            <p>
-              <strong>Order & Customer Service:</strong>
-              <br />
-              Order Hotline: +44 (0) 116-XXX-XXXX
-              <br />
-              WhatsApp Orders: +44 (0) 7XXX-XXX-XXX
-              <br />
-              Email: orders@nigerianbreaduk.com
-              <br />
-              Customer Service: info@nigerianbreaduk.com
-            </p>
-
-            <p>
-              <strong>Business Hours:</strong>
-              <br />
-              Production: Daily 4:00 AM - 2:00 PM
-              <br />
-              Customer Service: Monday - Saturday 8:00 AM - 6:00 PM
-              <br />
-              Sunday: 10:00 AM - 4:00 PM
-              <br />
-              Order Cutoff: 8:00 PM for next-day baking
-            </p>
-          </CardContent>
-        </Card>
-        <Card style={{ marginTop: "2rem" }}>
-          <CardContent>
-            <h3>Delivery Area</h3>
-            <p>
-              <strong>Primary Delivery Area:</strong>
-              <br />
-              • Greater London Area <br />
-              • Birmingham & West Midlands <br />
-              • Manchester & Greater Manchester <br />
-              • Liverpool & Merseyside <br />• Leicester & Leicestershire
-            </p>
-
-            <p>
-              <strong>Extended Delivery Area:</strong>
-              <br />• Available to most UK addresses with 2-3 day delivery
-            </p>
+            <CardTitle>Follow Us on Social Media</CardTitle>
+            <div
+              style={{
+                display: "flex",
+                gap: "1rem",
+                justifyContent: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <Button>Facebook</Button>
+              <Button>Instagram</Button>
+              <Button>Twitter</Button>
+              <Button>YouTube</Button>
+              <Button>Pinterest</Button>
+              <Button>TikTok</Button>
+            </div>
           </CardContent>
         </Card>
       </Section>

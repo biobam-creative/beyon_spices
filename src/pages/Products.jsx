@@ -1,12 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import CardWithImageSource, { CardGrid } from "../components/Card";
-
-import classicBread from "../assets/classic.jpeg";
-import wholeWheatBread from "../assets/whole wheat.jpg";
-import sweetBread from "../assets/sweet.jpeg";
-import coconutBread from "../assets/coconut.jpg";
-import glutenFreeBread from "../assets/glutenfree.jpg";
+import SpiceCard, { CardGrid } from "../components/SpiceCard";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -25,103 +19,93 @@ const SectionTitle = styled.h2`
   color: ${(props) => props.theme.primary};
 `;
 
+const RegionTitle = styled.h3`
+  font-size: 2rem;
+  color: ${(props) => props.theme.secondary};
+  margin: 3rem 0 1.5rem;
+  border-bottom: 2px solid ${(props) => props.theme.primary};
+  padding-bottom: 0.5rem;
+`;
+
 const Products = () => {
-  const products = [
-    {
-      id: 1,
-      name: "Classic Nigerian White Bread",
-      description:
-        "Traditional soft white bread with the authentic Nigerian taste",
-      price: "£3.00 - £4.50",
-      image: classicBread,
-      imageSource: "https://www.pinterest.com/pin/501095896053073635/",
-    },
-    {
-      id: 2,
-      name: "Nigerian Whole Wheat Bread",
-      description: "Healthier option maintaining authentic Nigerian flavor",
-      price: "£3.50 per loaf (800g)",
-      image: wholeWheatBread,
-      imageSource: "https://www.zojirushi.com/app/recipe/whole-wheat-bread",
-    },
-    {
-      id: 3,
-      name: "Sweet Nigerian Bread (Agege Bread Style)",
-      description: "Extra sweet version popular in Lagos and surrounding areas",
-      price: "£3.50 per loaf (800g)",
-      image: sweetBread,
-      imageSource:
-        "https://www.travelstart.com.ng/blog/food-nigerians-miss-most-while-living-abroad/",
-    },
-    {
-      id: 4,
-      name: "Coconut Nigerian Bread",
-      description: "Fusion flavor combining Nigerian tradition with coconut",
-      price: "£4.00 per loaf (800g)",
-      image: coconutBread,
-      imageSource:
-        "https://fabwoman.ng/coconut-bread-nigerian-recipe-video-tutorial-fabwoman/",
-    },
-    {
-      id: 5,
-      name: "Gluten-Free Nigerian-Style Bread",
-      description:
-        "For customers with dietary restrictions who miss Nigerian bread",
-      price: "£5.00 per loaf (600g)",
-      image: glutenFreeBread,
-      imageSource:
-        "https://mamashire.com/easy-gluten-free-bread-recipe-one-bowl/",
-    },
-  ];
+  const spiceCategories = {
+    ethiopian: [
+      {
+        id: 1,
+        name: "Berbere Spice Blend",
+        description:
+          "Traditional Ethiopian spice mix with complex heat and depth",
+        ingredients:
+          "Bird's eye chili, fenugreek, coriander, cardamom, nigella, and more",
+        uses: "Perfect for doro wat, vegetarian stews, meat marinades",
+        price: "£8.50 per 100g jar",
+        image:
+          "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        id: 2,
+        name: "Mitmita Blend",
+        description: "Fiery Ethiopian seasoning for traditional dishes",
+        ingredients: "Bird's eye chili, cardamom, cloves, cinnamon",
+        uses: "Kitfo (Ethiopian steak tartare), lentil dishes",
+        price: "£7.50 per 50g jar",
+        image:
+          "https://images.unsplash.com/photo-1598615434895-68a81ce7d56e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    westAfrican: [
+      {
+        id: 3,
+        name: "Suya Spice Mix",
+        description: "Nigerian street food seasoning blend",
+        ingredients: "Groundnuts, ginger, garlic, chili, onion powder",
+        uses: "Grilled meats, roasted vegetables, snack seasoning",
+        price: "£6.00 per 75g jar",
+        image:
+          "https://images.unsplash.com/photo-1594048504379-5f5e3ad65b4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+  };
 
   const handleAddToCart = (productId) => {
     alert(`Added product ${productId} to cart!`);
-    // In a real application, you would add the product to a shopping cart
   };
 
   return (
     <Container>
       <Section>
-        <SectionTitle>Our Bread Selection</SectionTitle>
+        <SectionTitle>Our African Spice Collection</SectionTitle>
+
+        <RegionTitle>Ethiopian Spice Blends</RegionTitle>
         <CardGrid>
-          {products.map((product) => (
-            <CardWithImageSource
+          {spiceCategories.ethiopian.map((product) => (
+            <SpiceCard
               key={product.id}
               image={product.image}
-              imageSource={product.imageSource}
               title={product.name}
               description={product.description}
+              ingredients={product.ingredients}
+              uses={product.uses}
               price={product.price}
               onButtonClick={() => handleAddToCart(product.id)}
             />
           ))}
         </CardGrid>
-      </Section>
 
-      <Section>
-        <SectionTitle>Additional Services</SectionTitle>
+        <RegionTitle>West African Specialties</RegionTitle>
         <CardGrid>
-          <CardWithImageSource
-            image="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-            imageSource="https://unsplash.com/photos/0a96f2a4b9da"
-            title="Online Ordering & Delivery"
-            description="UK-wide delivery service with fresh bread delivered within 2-3 days of baking"
-            showButton={false}
-          />
-          <CardWithImageSource
-            image="https://images.unsplash.com/photo-1563014959-7aaa83350992?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-            imageSource="https://unsplash.com/photos/7aaa83350992"
-            title="Loyalty Program"
-            description="Points-based system for regular customers with rewards and discounts"
-            showButton={false}
-          />
-          <CardWithImageSource
-            image="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80"
-            imageSource="https://unsplash.com/photos/ef04bbd61622"
-            title="Corporate & Event Catering"
-            description="Bulk orders for Nigerian community events, corporate lunches, and more"
-            showButton={false}
-          />
+          {spiceCategories.westAfrican.map((product) => (
+            <SpiceCard
+              key={product.id}
+              image={product.image}
+              title={product.name}
+              description={product.description}
+              ingredients={product.ingredients}
+              uses={product.uses}
+              price={product.price}
+              onButtonClick={() => handleAddToCart(product.id)}
+            />
+          ))}
         </CardGrid>
       </Section>
     </Container>
