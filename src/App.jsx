@@ -21,13 +21,10 @@ import Contact from "./pages/Contact";
 import Disclaimer from "./pages/Disclaimer";
 
 function App() {
-  const [disclaimerAccepted, setDisclaimerAccepted] = useState(
-    localStorage.getItem("disclaimerAccepted") === "true"
-  );
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
 
   const handleAcceptDisclaimer = () => {
     setDisclaimerAccepted(true);
-    localStorage.setItem("disclaimerAccepted", "true");
   };
 
   return (
@@ -45,6 +42,7 @@ function App() {
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <meta name="theme-color" content="#E25822" />
       </Helmet>
 
       <Router>

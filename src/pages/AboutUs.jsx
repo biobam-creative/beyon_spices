@@ -3,12 +3,11 @@ import styled from "styled-components";
 import {
   Card,
   CardContent,
-  CardGrid,
   CardTitle,
-  CardImage,
-} from "../components/Card";
-import Button from "../components/Button";
-import founderImage from "../assets/founder.jpeg";
+  CardGrid,
+} from "../components/SpiceCard";
+
+import founder from "../assets/founder.jpg";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -27,164 +26,404 @@ const SectionTitle = styled.h2`
   color: ${(props) => props.theme.primary};
 `;
 
+const HeroSection = styled.section`
+  background: linear-gradient(
+    135deg,
+    ${(props) => props.theme.primary}15,
+    ${(props) => props.theme.accent}15
+  );
+  padding: 4rem 0;
+  text-align: center;
+`;
+
+const HeroTitle = styled.h1`
+  font-size: 3rem;
+  color: ${(props) => props.theme.primary};
+  margin-bottom: 1rem;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: 2.2rem;
+  }
+`;
+
+const HeroSubtitle = styled.p`
+  font-size: 1.3rem;
+  color: ${(props) => props.theme.secondary};
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+`;
+
+const ValuesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+`;
+
+const ValueCard = styled(Card)`
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-top: 4px solid ${(props) => props.theme.primary};
+`;
+
+const ValueIcon = styled.div`
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: ${(props) => props.theme.primary};
+`;
+
+const ValueTitle = styled.h3`
+  color: ${(props) => props.theme.primary};
+  margin-bottom: 1rem;
+`;
+
+const Timeline = styled.div`
+  position: relative;
+  margin: 3rem 0;
+  padding-left: 2rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: ${(props) => props.theme.primary};
+    border-radius: 2px;
+  }
+`;
+
+const TimelineItem = styled.div`
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 2rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -1rem;
+    top: 0.5rem;
+    width: 12px;
+    height: 12px;
+    background: ${(props) => props.theme.primary};
+    border-radius: 50%;
+    border: 3px solid ${(props) => props.theme.light};
+  }
+`;
+
+const TimelineYear = styled.div`
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: ${(props) => props.theme.primary};
+  margin-bottom: 0.5rem;
+`;
+
+const ImpactStats = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+  text-align: center;
+`;
+
+const StatItem = styled.div`
+  padding: 2rem 1rem;
+`;
+
+const StatNumber = styled.div`
+  font-size: 3rem;
+  font-weight: bold;
+  color: ${(props) => props.theme.primary};
+  margin-bottom: 0.5rem;
+`;
+
+const StatLabel = styled.div`
+  font-size: 1.1rem;
+  color: ${(props) => props.theme.secondary};
+  font-weight: 600;
+`;
+
+const FounderSection = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: center;
+  margin: 3rem 0;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+`;
+
+const FounderImage = styled.div`
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    ${(props) => props.theme.primary},
+    ${(props) => props.theme.accent}
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 4rem;
+  margin: 0 auto;
+`;
+
 const About = () => {
-  const values = [
+  const coreValues = [
     {
-      value: "Authenticity",
-      explanation:
-        "Maintaining traditional Nigerian recipes and baking methods",
+      icon: "🤝",
+      title: "Ethical Sourcing",
+      description: "Fair wages and working conditions for all partners",
     },
     {
-      value: "Quality",
-      explanation:
-        "Using only natural, locally sourced ingredients without preservatives",
+      icon: "⭐",
+      title: "Quality Excellence",
+      description: "Only the finest, hand-selected spices reach our customers",
     },
     {
-      value: "Community",
-      explanation:
-        "Serving the Nigerian diaspora and building cultural connections",
+      icon: "🌍",
+      title: "Cultural Authenticity",
+      description:
+        "Preserving traditional spice knowledge and preparation methods",
     },
     {
-      value: "Innovation",
-      explanation: "Combining traditional methods with modern convenience",
+      icon: "🌱",
+      title: "Sustainability",
+      description:
+        "Supporting organic and environmentally responsible farming practices",
     },
     {
-      value: "Cultural Bridge",
-      explanation:
-        "Introducing British customers to Nigerian culinary heritage",
+      icon: "👥",
+      title: "Community Impact",
+      description:
+        "Building lasting relationships that benefit African farming communities",
+    },
+    {
+      icon: "📚",
+      title: "Education",
+      description: "Teaching UK consumers about African culinary traditions",
     },
   ];
 
   const milestones = [
     {
       year: "2023",
-      event: "Market research conducted among 270,000+ Nigerians in the UK",
-    },
-    {
-      year: "2023",
       event:
-        "Business plan developed identifying significant demand for authentic Nigerian bread",
+        "Established partnerships with organic spice farmers across five African countries",
     },
     {
       year: "2023",
-      event:
-        "Production facility planned for Leicester with automated bread-making equipment",
+      event: "Developed direct-trade relationships ensuring fair pricing",
     },
     {
       year: "2023",
-      event:
-        "Online ordering system and delivery network designed for UK-wide service",
+      event: "Launched quality control processes maintaining premium standards",
     },
     {
       year: "2023",
-      event: "Partnerships established with local ingredient suppliers",
+      event: "Created educational content about African spice traditions",
+    },
+    {
+      year: "2023",
+      event: "Built supply chain infrastructure for UK distribution",
     },
   ];
 
-  const team = [
-    {
-      image: founderImage,
-      name: "Goodness Ajala",
-      position: "Head Baker & Owner ",
-      bio: "Drawing from extensive experience operating a successful bakery in Nigeria, our founder brings authentic knowledge of traditional Nigerian bread-making techniques to the UK market. With a passion for preserving cultural food traditions and serving the Nigerian community.",
-    },
+  const impactStats = [
+    { number: "5", label: "African Countries" },
+    { number: "500+", label: "Farmers Supported" },
+    { number: "100%", label: "Fair Trade" },
+    { number: "Organic", label: "Farming Practices" },
   ];
 
   return (
     <Container>
-      <Section>
-        <SectionTitle>Our Story</SectionTitle>
-        <Card>
-          <CardContent>
-            <p>
-              Nigerian Bread Mini Bakery was founded with a simple mission: to
-              bring the authentic taste of Nigerian bread to Nigerians living in
-              the UK while introducing British customers to the rich flavors of
-              Nigerian baking traditions. Recognizing the gap in the market for
-              fresh, authentic Nigerian bread, our founder leveraged years of
-              bakery experience from Nigeria to establish this venture.
-            </p>
-          </CardContent>
-        </Card>
-      </Section>
+      <HeroSection className="pattern-bg">
+        <HeroTitle>Our Story</HeroTitle>
+        <HeroSubtitle>
+          Beyno's African Spice Company was founded on the belief that food has
+          the power to connect cultures while creating positive social impact.
+          Named after the traditional African concept of "Beyno" meaning
+          community and togetherness, our company bridges the gap between
+          African spice producers and UK consumers who crave authentic flavors.
+        </HeroSubtitle>
+      </HeroSection>
 
       <Section>
-        <SectionTitle>Our Mission</SectionTitle>
-        <Card>
-          <CardContent>
-            <p>
-              To preserve and share Nigerian bread-making traditions by
-              producing authentic, fresh, and high-quality Nigerian bread for
-              the UK market, connecting the Nigerian diaspora to their culinary
-              heritage while introducing new customers to the unique flavors of
-              Nigeria.
-            </p>
-          </CardContent>
-        </Card>
-      </Section>
-
-      <Section>
-        <SectionTitle>Our Vision</SectionTitle>
-        <Card>
-          <CardContent>
-            <p>
-              To become the leading provider of authentic Nigerian bread in the
-              UK, creating a bridge between cultures through food and building a
-              community that celebrates Nigerian culinary traditions.
-            </p>
-          </CardContent>
-        </Card>
-      </Section>
-
-      <Section>
-        <SectionTitle>Our Team</SectionTitle>
+        <SectionTitle>Our Mission & Vision</SectionTitle>
         <CardGrid>
-          {team.map((member, index) => (
-            <Card key={index} style={{ width: "300px" }}>
-              <CardImage src={member.image} alt={member.name} />
-              <CardContent>
-                <CardTitle>{`${member.name} - ${member.position}`}</CardTitle>
-                <p style={{ fontSize: "13px" }}>{member.bio}</p>
-                {/* <p>
-                  <strong>{product.price}</strong>
-                </p> */}
-                <Button primary style={{ marginTop: "1rem" }}>
-                  Read More
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+          <Card>
+            <CardContent>
+              <CardTitle>Our Mission</CardTitle>
+              <p>
+                To introduce the rich variety of African spice flavors to UK
+                kitchens while guaranteeing premium quality and fair production
+                practices that support African farmers and encourage sustainable
+                agriculture.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <CardTitle>Our Vision</CardTitle>
+              <p>
+                To become the UK's leading supplier of ethically sourced African
+                spices, creating a sustainable supply chain that benefits both
+                consumers seeking authentic flavors and African farming
+                communities seeking fair economic opportunities.
+              </p>
+            </CardContent>
+          </Card>
         </CardGrid>
       </Section>
 
-      <Section>
-        <SectionTitle>Our Values</SectionTitle>
-        <Card>
-          <CardContent>
-            <ul>
-              {values.map((value, index) => (
-                <li key={index}>
-                  <strong>{value.value}:</strong> {value.explanation}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+      <Section style={{ backgroundColor: "#f8f4e9" }}>
+        <SectionTitle>Our Core Values</SectionTitle>
+        <ValuesGrid>
+          {coreValues.map((value, index) => (
+            <ValueCard key={index}>
+              <ValueIcon>{value.icon}</ValueIcon>
+              <ValueTitle>{value.title}</ValueTitle>
+              <p>{value.description}</p>
+            </ValueCard>
+          ))}
+        </ValuesGrid>
       </Section>
 
       <Section>
-        <SectionTitle>Company Milestones</SectionTitle>
-        <Card>
-          <CardContent>
-            <ul>
-              {milestones.map((milestone, index) => (
-                <li key={index}>
-                  <strong>{milestone.year}:</strong> {milestone.event}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        <SectionTitle>Our Impact</SectionTitle>
+
+        <ImpactStats>
+          {impactStats.map((stat, index) => (
+            <StatItem key={index}>
+              <StatNumber>{stat.number}</StatNumber>
+              <StatLabel>{stat.label}</StatLabel>
+            </StatItem>
+          ))}
+        </ImpactStats>
+
+        <CardGrid>
+          <Card>
+            <CardContent>
+              <CardTitle>Supporting African Communities</CardTitle>
+              <p>
+                Every purchase from Beyno's directly supports small-scale
+                African farmers through our fair-trade partnerships. We work
+                with farming cooperatives across Ghana, Ethiopia, Nigeria,
+                Morocco, and Kenya, ensuring farmers receive premium prices for
+                their high-quality spices.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <CardTitle>Sustainable Agriculture Practices</CardTitle>
+              <p>
+                Our partners use organic farming methods that protect soil
+                health, preserve biodiversity, and maintain the traditional
+                growing practices that produce the most flavorful spices.
+              </p>
+            </CardContent>
+          </Card>
+        </CardGrid>
+      </Section>
+
+      <Section style={{ backgroundColor: "#f8f4e9" }}>
+        <SectionTitle>Founder & Leadership Team</SectionTitle>
+        <FounderSection>
+          <FounderImage>
+            <img
+              src={founder}
+              style={{ height: "180px", width: "180px", borderRadius: "50%" }}
+            />
+          </FounderImage>
+          <div>
+            <h3
+              style={{
+                color: (props) => props.theme.primary,
+                marginBottom: "1rem",
+              }}
+            >
+              Founder & CEO
+            </h3>
+            <p>
+              With deep roots in African culinary traditions and a passion for
+              ethical business practices, our founder established Beyno's to
+              share the incredible diversity of African spices while ensuring
+              the farmers who grow them receive fair compensation for their
+              expertise and labor.
+            </p>
+            <p>
+              The name "Beyno" reflects our commitment to community and
+              togetherness - values that guide every aspect of our business from
+              farmer relationships to customer service.
+            </p>
+          </div>
+        </FounderSection>
+      </Section>
+
+      <Section>
+        <SectionTitle>Our Journey</SectionTitle>
+        <Timeline>
+          {milestones.map((milestone, index) => (
+            <TimelineItem key={index}>
+              <TimelineYear>{milestone.year}</TimelineYear>
+              <p>{milestone.event}</p>
+            </TimelineItem>
+          ))}
+        </Timeline>
+      </Section>
+
+      <Section style={{ backgroundColor: "#f8f4e9" }}>
+        <SectionTitle>Why Choose Beyno's?</SectionTitle>
+        <CardGrid>
+          <Card>
+            <CardContent>
+              <CardTitle>Authentic African Flavors</CardTitle>
+              <p>
+                We bring you the true taste of Africa with spices sourced
+                directly from their regions of origin, preserving traditional
+                flavors and preparation methods.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <CardTitle>Ethical Supply Chain</CardTitle>
+              <p>
+                Our direct partnerships with African farmers ensure fair wages
+                and support sustainable agricultural practices that benefit both
+                people and planet.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <CardTitle>Premium Quality</CardTitle>
+              <p>
+                Every spice is hand-selected and undergoes rigorous quality
+                control to meet the highest standards of freshness and flavor.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <CardTitle>Cultural Connection</CardTitle>
+              <p>
+                We're more than a spice company - we're a bridge between
+                cultures, sharing the rich culinary heritage of Africa with UK
+                kitchens.
+              </p>
+            </CardContent>
+          </Card>
+        </CardGrid>
       </Section>
     </Container>
   );

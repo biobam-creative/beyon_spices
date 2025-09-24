@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import SpiceCard, { CardGrid } from "../components/SpiceCard";
+import spiceImage1 from "../assets/spice1.jpg";
+import spiceImage2 from "../assets/spice2.jpg";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -49,8 +51,7 @@ const Products = () => {
         ingredients: "Bird's eye chili, cardamom, cloves, cinnamon",
         uses: "Kitfo (Ethiopian steak tartare), lentil dishes",
         price: "£7.50 per 50g jar",
-        image:
-          "https://images.unsplash.com/photo-1598615434895-68a81ce7d56e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: spiceImage1,
       },
     ],
     westAfrican: [
@@ -61,8 +62,7 @@ const Products = () => {
         ingredients: "Groundnuts, ginger, garlic, chili, onion powder",
         uses: "Grilled meats, roasted vegetables, snack seasoning",
         price: "£6.00 per 75g jar",
-        image:
-          "https://images.unsplash.com/photo-1594048504379-5f5e3ad65b4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: spiceImage2,
       },
     ],
   };
@@ -96,6 +96,7 @@ const Products = () => {
         <CardGrid>
           {spiceCategories.westAfrican.map((product) => (
             <SpiceCard
+              style={{ width: "300px" }}
               key={product.id}
               image={product.image}
               title={product.name}
