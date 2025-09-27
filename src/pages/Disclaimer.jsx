@@ -42,7 +42,7 @@ const Disclaimer = ({ onAccept }) => {
     <DisclaimerContainer>
       <Container>
         <Section>
-          <SectionTitle>Beyon African Spices</SectionTitle>
+          <SectionTitle>Beyno's African Spices</SectionTitle>
           <Card>
             <CardContent>
               <h2>Educational Disclaimer</h2>
