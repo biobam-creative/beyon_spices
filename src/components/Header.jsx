@@ -110,6 +110,12 @@ const Header = () => {
               </Link>
             </NavItem>
             <NavItem>
+              <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>
+                Blog
+              </Link>
+            </NavItem>
+
+            <NavItem>
               <Link to="/recipes" onClick={() => setMobileMenuOpen(false)}>
                 Recipes
               </Link>
